@@ -25,33 +25,33 @@ npm install @reserveproof/sdk
 ### Initialize the client
 
 ```typescript
-import { ReserveProofClient } from '@reserveproof/sdk';
-import { Keypair } from '@stellar/stellar-sdk';
+import { ReserveProofClient } from "@reserveproof/sdk";
+import { Keypair } from "@stellar/stellar-sdk";
 
 const client = new ReserveProofClient({
-  contractId: 'CXXXXX...',
-  rpcUrl: 'https://soroban-testnet.stellar.org',
-  networkPassphrase: 'Test SDF Network ; September 2015',
-  signer: Keypair.fromSecret('SXXXXX...'),
+  contractId: "CXXXXX...",
+  rpcUrl: "https://soroban-testnet.stellar.org",
+  networkPassphrase: "Test SDF Network ; September 2015",
+  signer: Keypair.fromSecret("SXXXXX..."),
 });
 ```
 
 ### Submit an attestation
 
 ```typescript
-const result = await client.submitAttestation('issuer_address', {
+const result = await client.submitAttestation("issuer_address", {
   reserveBalance: BigInt(1_000_000_00), // $1M in smallest units
   outstandingSupply: BigInt(1_000_000_00), // 1M tokens
-  supportingDocHash: '0x...',
+  supportingDocHash: "0x...",
 });
-console.log('Attestation ID:', result.attestationId);
+console.log("Attestation ID:", result.attestationId);
 ```
 
 ### Check reserve ratio
 
 ```typescript
-const ratio = await client.getReserveRatio('issuer_address');
-console.log('Reserve ratio (basis points):', ratio); // 10000 = 100%
+const ratio = await client.getReserveRatio("issuer_address");
+console.log("Reserve ratio (basis points):", ratio); // 10000 = 100%
 ```
 
 ## API Reference
@@ -71,6 +71,7 @@ console.log('Reserve ratio (basis points):', ratio); // 10000 = 100%
 ## Examples
 
 See `examples/` directory:
+
 - `submit-attestation.ts` — Single-attestor submission
 - `multi-attestor-cycle.ts` — Multi-sig co-signing
 - `watchdog.ts` — Permissionless staleness watcher (run as cron job)

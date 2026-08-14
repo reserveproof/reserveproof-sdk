@@ -3,6 +3,7 @@
 ## Local Development Setup
 
 ### Prerequisites
+
 - Node.js 18+
 - npm or yarn
 
@@ -58,6 +59,7 @@ npm run lint
 ## Commits
 
 This project follows Conventional Commits:
+
 - `feat(sdk): add ReserveProofClient class`
 - `feat(sdk): add BankBalanceAdapter interface`
 - `docs(sdk): add watchdog example`

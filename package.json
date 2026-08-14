@@ -22,7 +22,9 @@
     "dev": "tsup --watch",
     "type-check": "tsc --noEmit",
     "test": "vitest",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
     "@stellar/stellar-sdk": "^12.0.0"
@@ -34,7 +36,8 @@
     "@types/node": "^20.10.6",
     "eslint": "^8.56.0",
     "@typescript-eslint/eslint-plugin": "^6.16.0",
-    "@typescript-eslint/parser": "^6.16.0"
+    "@typescript-eslint/parser": "^6.16.0",
+    "prettier": "^3.1.0"
   },
   "keywords": [
     "stellar",

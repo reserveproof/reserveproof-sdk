@@ -14,22 +14,25 @@
  * 5. Poll for finalization event
  */
 
-import { ReserveProofClient, MockBankAdapter } from '../src/index';
-import { Keypair, Networks } from '@stellar/stellar-sdk';
+import { ReserveProofClient, MockBankAdapter } from "../src/index";
+import { Keypair, Networks } from "@stellar/stellar-sdk";
 
 async function main() {
-  console.log('🔗 ReserveProof Single-Attestor Submission Example');
-  console.log('================================================\n');
+  console.log("🔗 ReserveProof Single-Attestor Submission Example");
+  console.log("================================================\n");
 
   // Configuration
-  const CONTRACT_ID = process.env.RESERVEPROOF_CONTRACT_ID || 'CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7';
-  const RPC_URL = process.env.SOROBAN_RPC_URL || 'https://soroban-testnet.stellar.org';
+  const CONTRACT_ID =
+    process.env.RESERVEPROOF_CONTRACT_ID ||
+    "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7";
+  const RPC_URL =
+    process.env.SOROBAN_RPC_URL || "https://soroban-testnet.stellar.org";
   const NETWORK_PASSPHRASE = Networks.TESTNET_NETWORK_PASSPHRASE;
 
   // Load issuer keypair (from environment or .env)
   const issuerSecret = process.env.ISSUER_SECRET_KEY;
   if (!issuerSecret) {
-    console.error('❌ Error: ISSUER_SECRET_KEY environment variable not set');
+    console.error("❌ Error: ISSUER_SECRET_KEY environment variable not set");
     process.exit(1);
   }
 
@@ -54,37 +57,46 @@ async function main() {
     const attestation = {
       reserveBalance: BigInt(1_000_000_00), // $1M in cents
       outstandingSupply: BigInt(1_000_000_00), // 1M USDC
-      supportingDocHash: '0x' + '0'.repeat(64), // Mock hash
+      supportingDocHash: "0x" + "0".repeat(64), // Mock hash
     };
 
     console.log(`📝 Submitting attestation:`);
-    console.log(`   Reserve Balance: ${attestation.reserveBalance / BigInt(100)} (cents)`);
+    console.log(
+      `   Reserve Balance: ${attestation.reserveBalance / BigInt(100)} (cents)`,
+    );
     console.log(`   Outstanding Supply: ${attestation.outstandingSupply}`);
     console.log(`   Doc Hash: ${attestation.supportingDocHash}\n`);
 
     // Submit attestation
-    console.log('⏳ Submitting attestation to contract...');
+    console.log("⏳ Submitting attestation to contract...");
     const result = await client.submitAttestation(issuerAddress, attestation);
 
     console.log(`✅ Attestation submitted!`);
     console.log(`   Attestation ID: ${result.attestationId}`);
     console.log(`   Tx Hash: ${result.txResult.transactionHash}`);
-    console.log(`   Ledger Close Time: ${new Date(result.txResult.ledgerCloseTime * 1000).toISOString()}\n`);
+    console.log(
+      `   Ledger Close Time: ${new Date(result.txResult.ledgerCloseTime * 1000).toISOString()}\n`,
+    );
 
     // For single-attestor (min_signers=1), attestation should be immediately finalized
-    console.log('📊 Checking attestation state...');
+    console.log("📊 Checking attestation state...");
     const latestAttestation = await client.getLatestAttestation(issuerAddress);
 
     if (latestAttestation) {
       console.log(`✅ Attestation state:`);
       console.log(`   State: ${latestAttestation.state}`);
       console.log(`   Signers: ${latestAttestation.signers.length}`);
-      console.log(`   Reserve Ratio: ${((latestAttestation.reserveBalance * 10000n) / latestAttestation.outstandingSupply)} basis points\n`);
+      console.log(
+        `   Reserve Ratio: ${(latestAttestation.reserveBalance * 10000n) / latestAttestation.outstandingSupply} basis points\n`,
+      );
     }
 
-    console.log('✨ Example completed successfully!');
+    console.log("✨ Example completed successfully!");
   } catch (error) {
-    console.error('❌ Error:', error instanceof Error ? error.message : String(error));
+    console.error(
+      "❌ Error:",
+      error instanceof Error ? error.message : String(error),
+    );
     process.exit(1);
   }
 }
