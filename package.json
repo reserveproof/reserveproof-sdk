@@ -1,0 +1,43 @@
+{
+  "name": "@reserveproof/sdk",
+  "version": "0.1.0",
+  "description": "TypeScript SDK for ReserveProof integrations",
+  "main": "./dist/index.js",
+  "module": "./dist/index.esm.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "type-check": "tsc --noEmit",
+    "test": "vitest",
+    "lint": "eslint src"
+  },
+  "dependencies": {
+    "@stellar/stellar-sdk": "^12.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "tsup": "^8.0.0",
+    "vitest": "^1.0.0",
+    "@types/node": "^20.10.6",
+    "eslint": "^8.56.0",
+    "@typescript-eslint/eslint-plugin": "^6.16.0",
+    "@typescript-eslint/parser": "^6.16.0"
+  },
+  "keywords": [
+    "stellar",
+    "soroban",
+    "proof-of-reserves",
+    "attestation"
+  ],
+  "author": "ReserveProof Contributors",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/reserveproof/reserveproof-sdk.git"
+  }
+}
