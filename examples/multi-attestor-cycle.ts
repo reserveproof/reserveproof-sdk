@@ -58,9 +58,7 @@ async function main() {
       contractId: CONTRACT_ID,
       rpcUrl: RPC_URL,
       networkPassphrase: NETWORK_PASSPHRASE,
-      signer: {
-        signTransaction: async (tx: any) => bankKeypair.sign(tx),
-      },
+      signer: bankKeypair,
     });
 
     const attestation = {
@@ -81,9 +79,7 @@ async function main() {
       contractId: CONTRACT_ID,
       rpcUrl: RPC_URL,
       networkPassphrase: NETWORK_PASSPHRASE,
-      signer: {
-        signTransaction: async (tx: any) => auditorKeypair.sign(tx),
-      },
+      signer: auditorKeypair,
     });
 
     await auditorClient.coSignAttestation(attestationId);
@@ -95,9 +91,7 @@ async function main() {
       contractId: CONTRACT_ID,
       rpcUrl: RPC_URL,
       networkPassphrase: NETWORK_PASSPHRASE,
-      signer: {
-        signTransaction: async (tx: any) => issuerKeypair.sign(tx),
-      },
+      signer: issuerKeypair,
     });
 
     await issuerClient.coSignAttestation(attestationId);

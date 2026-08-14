@@ -46,12 +46,7 @@ async function main() {
     contractId: CONTRACT_ID,
     rpcUrl: RPC_URL,
     networkPassphrase: NETWORK_PASSPHRASE,
-    signer: {
-      signTransaction: async (tx: any) => {
-        // Sign transaction with issuer keypair
-        return issuerKeypair.sign(tx);
-      },
-    },
+    signer: issuerKeypair,
   });
 
   try {

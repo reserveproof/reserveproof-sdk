@@ -70,9 +70,7 @@ async function runWatchdog(config: WatchdogConfig): Promise<void> {
     contractId: config.contractId,
     rpcUrl: config.rpcUrl,
     networkPassphrase: Networks.TESTNET_NETWORK_PASSPHRASE,
-    signer: {
-      signTransaction: async (tx: any) => signerKeypair.sign(tx),
-    },
+    signer: signerKeypair,
   });
 
   // Poll loop
