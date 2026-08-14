@@ -1,4 +1,4 @@
-import { ContractSpec, Address, StrKey, xdr, scValToNative, nativeToScVal } from '@stellar/stellar-sdk';
+import { Keypair, Networks } from '@stellar/stellar-sdk';
 
 export interface Signer {
   signTransaction(tx: any): Promise<any>;
@@ -119,6 +119,3 @@ export class MockBankAdapter implements BankBalanceAdapter {
     this.balance = balance;
   }
 }
-
-// Export types for SDK consumers
-export type { Signer, ReserveProofConfig, AttestationInput, Attestation, IssuerEntry, BankBalanceAdapter, TxResult };
