@@ -84,7 +84,7 @@ async function runWatchdog(config: WatchdogConfig): Promise<void> {
   const client = new ReserveProofClient({
     contractId: config.contractId,
     rpcUrl: config.rpcUrl,
-    networkPassphrase: Networks.TESTNET_NETWORK_PASSPHRASE,
+    networkPassphrase: Networks.TESTNET,
     signer: signerKeypair,
   });
 
@@ -106,13 +106,14 @@ async function runWatchdog(config: WatchdogConfig): Promise<void> {
       }
     }
 
-    if (!config.interval || config.interval === 0) {
+    const interval = config.interval;
+    if (!interval) {
       console.log("\n✨ Watchdog run complete (one-shot mode)");
       break;
     }
 
-    console.log(`⏳ Next poll in ${config.interval}s...`);
-    await new Promise((resolve) => setTimeout(resolve, config.interval * 1000));
+    console.log(`⏳ Next poll in ${interval}s...`);
+    await new Promise((resolve) => setTimeout(resolve, interval * 1000));
   }
 }
 

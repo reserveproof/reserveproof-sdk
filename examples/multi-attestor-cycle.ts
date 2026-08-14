@@ -30,7 +30,7 @@ async function main() {
     "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7";
   const RPC_URL =
     process.env.SOROBAN_RPC_URL || "https://soroban-testnet.stellar.org";
-  const NETWORK_PASSPHRASE = Networks.TESTNET_NETWORK_PASSPHRASE;
+  const NETWORK_PASSPHRASE = Networks.TESTNET;
 
   // Load attestor keypairs
   const bankSecret = process.env.BANK_SECRET_KEY;
