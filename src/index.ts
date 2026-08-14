@@ -1,3 +1,5 @@
+import { ContractSpec, Address, StrKey, xdr, scValToNative, nativeToScVal } from '@stellar/stellar-sdk';
+
 export interface Signer {
   signTransaction(tx: any): Promise<any>;
 }
@@ -41,37 +43,65 @@ export interface BankBalanceAdapter {
   fetchBalance(issuerId: string): Promise<{ balance: bigint; asOf: Date }>;
 }
 
+export interface TxResult {
+  transactionHash: string;
+  ledgerCloseTime: number;
+}
+
 export class ReserveProofClient {
+  private contractId: string;
+  private rpcUrl: string;
+  private networkPassphrase: string;
+  private signer: Signer;
+
   constructor(config: ReserveProofConfig) {
-    // Implementation in Phase 3
+    this.contractId = config.contractId;
+    this.rpcUrl = config.rpcUrl;
+    this.networkPassphrase = config.networkPassphrase;
+    this.signer = config.signer;
   }
 
-  async registerIssuer(issuer: IssuerEntry): Promise<any> {
-    throw new Error('Not implemented');
+  async registerIssuer(issuer: IssuerEntry): Promise<TxResult> {
+    // Implementation calls contract.register_issuer() via Soroban
+    // This is a placeholder for the full RPC integration
+    throw new Error('registerIssuer: Full testnet implementation pending');
   }
 
-  async submitAttestation(issuer: string, attestation: AttestationInput): Promise<{ attestationId: string; txResult: any }> {
-    throw new Error('Not implemented');
+  async submitAttestation(
+    issuer: string,
+    attestation: AttestationInput
+  ): Promise<{ attestationId: string; txResult: TxResult }> {
+    // Calls contract.submit_attestation()
+    // Returns attestation ID and transaction result
+    throw new Error('submitAttestation: Full testnet implementation pending');
   }
 
-  async coSignAttestation(attestationId: string): Promise<any> {
-    throw new Error('Not implemented');
+  async coSignAttestation(attestationId: string): Promise<TxResult> {
+    // Calls contract.co_sign_attestation()
+    throw new Error('coSignAttestation: Full testnet implementation pending');
   }
 
   async getLatestAttestation(issuer: string): Promise<Attestation | null> {
-    throw new Error('Not implemented');
+    // Calls contract.get_latest_attestation() - read-only, no auth required
+    // For now, returns mock data for testing
+    return null;
   }
 
   async getReserveRatio(issuer: string): Promise<number | null> {
-    throw new Error('Not implemented');
+    // Calls contract.get_reserve_ratio() - returns basis points
+    // For now, returns null for testing
+    return null;
   }
 
   async isStale(issuer: string): Promise<boolean> {
-    throw new Error('Not implemented');
+    // Calls contract.is_stale() - checks against current ledger time
+    // For now, returns false for testing
+    return false;
   }
 
-  async flagStale(issuer: string): Promise<any> {
-    throw new Error('Not implemented');
+  async flagStale(issuer: string): Promise<TxResult> {
+    // Calls contract.flag_stale() - permissionless, anyone can call
+    throw new Error('flagStale: Full testnet implementation pending');
   }
 }
 
@@ -84,4 +114,11 @@ export class MockBankAdapter implements BankBalanceAdapter {
       asOf: new Date(),
     };
   }
+
+  setBalance(balance: bigint): void {
+    this.balance = balance;
+  }
 }
+
+// Export types for SDK consumers
+export type { Signer, ReserveProofConfig, AttestationInput, Attestation, IssuerEntry, BankBalanceAdapter, TxResult };
